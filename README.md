@@ -7,7 +7,8 @@ The Pearson correlation coefficient is calculated as:
 between the pixel intensities of the model’s output, y, and independent ground-truth test images, x.
 
 ## Data
-The input for calculating the Pearson's correlation coefficient is the model prediction output of pytorch_fnet (https://github.com/AllenCellModeling/pytorch_fnet/blob/release_1/README.md). Data path of the data should be in the directory ./data with folder name "label"_train. For example, ./data/dapi_model_train.
+The input for calculating the Pearson's correlation coefficient is the prediction output of `pytorch_fnet`
+(https://github.com/AllenCellModeling/pytorch_fnet/blob/release_1/README.md). Data path of the data should be in the directory `./data` with folder name `"label"_train`. For example, `./data/dapi_model_train`.
 
 ## Computing environment 
 
