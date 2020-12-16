@@ -1,13 +1,41 @@
-# Label-free prediction of three-dimensional fluorescence images from transmitted light microscopy
-![Combined outputs](doc/PredictingStructures-1.jpg?raw=true "Combined outputs")
+# Super-Resolution Label-free Volumetric Vibrational Imaging
+## Calculation of Pearson's correlation correlation
+The Pearson correlation coefficient is calculated by `Pearson_correlation_coefficient.ipynb`
+as:
 
-## System Requirements
+<img src="https://render.githubusercontent.com/render/math?math=r=\frac{\sum(x-\bar{x})(y-\bar{y})}{\sqrt{\sum(x-\bar{x})^2\sum(y-\bar{y})^2}}">
+between the pixel intensities of the model’s output, y, and independent ground-truth test images, x.
+
+### Data
+The input for calculating the Pearson's correlation coefficient is the prediction output of `pytorch_fnet`
+(https://github.com/AllenCellModeling/pytorch_fnet/blob/release_1/README.md). Data path of the data should be in the directory `./data` with folder name `"label"_train`. For example, `./data/dapi_model_train`.
+
+### Computing environment 
+
+```shell
+CPython 3.8.5
+IPython 7.18.1
+
+numpy 1.19.1
+scipy 1.5.0
+pandas 1.1.2
+tqdm 4.50.0
+bokeh 2.2.1
+jupyterlab 2.2.6
+```
+
+
+
+## U-net model training and prediction
+The method is based on the `release_1` of https://github.com/AllenCellModeling/pytorch_fnet
+
+### System Requirements
 Installing on Linux is recommended (we have used Ubuntu 16.04).
 
 An nVIDIA graphics card with >10GB of ram (we have used an nVIDIA Titan X Pascal) with current drivers installed (we have used nVIDIA driver version 390.48).
 
-## Installation
-### Environment setup
+### Installation
+#### Environment setup
 - Install [Miniconda](https://conda.io/miniconda.html) if necessary.
 - Create a Conda environment for the platform:
 ```shell
@@ -23,14 +51,14 @@ conda activate fnet
 ```
 The installation was successful if the script executes without errors.
 
-## Data
+### Data
 Data is available as compressed tar achives [here](http://downloads.allencell.org/publication-data/label-free-prediction/index.html). Download and untar an image archive to the `./data/` directory (for example `./data/beta_actin/` should be full of images). All data can be automatically downloaded and untarred to the correct location by running
 ```shell
 ./scripts/paper/download_all_data.sh
 ```
 **Important note:** To build the DNA model, all data must be downloaded, as the we train on the DNA channels across all of these images.
 
-## Train a model with provided data
+### Train a model with provided data
 Activate the environment if necessary (`conda activate fnet`). Start training a model with:
 ```shell
 ./scripts/train_model.sh dna 0
@@ -65,7 +93,7 @@ $ tail losses.csv
 ```
 You can train other models by replacing `dna` with the names of the other structures datasets (e.g., `alpha_tubulin`, `dic_lamin_b1`, `fibrillarin`, etc.).
 
-## Run predictions with the trained model
+### Run predictions with the trained model
 ```
 ./scripts/predict.sh dna 0
 ```
@@ -81,7 +109,7 @@ prediction_dna.tiff  signal.tiff  target.tiff
 ```
 `signal.tiff`, `target.tiff`, and `prediction_dna.tiff` correspond to the input image (bright-field), the target image (real fluorescence image), and the model's output (predicted, "fake" fluorescence image) respectively.
 
-## Instructions to train models on your data
+### Instructions to train models on your data
 The most general solution is to implement a new PyTorch dataset object that is responsible for loading signal images (transmitted light) and target images (fluorescence) into a consistent format. See `fnet/data/tiffdataset.py` or `fnet/data/czidataset.py` as examples.  Our existing wrapper scripts will work if you make this dataset object have an `__init__` function that can be correctly called with a simple keyword argument of `path_csv`, which points to a CSV file (example: `data/csvs/mydata.csv`) that describes your dataset. You should implement `__getitem__()` to return a PyTorch Tensor objects, where the first element is the signal data and the second element is the target image.  The Tensors should be of dimensions of `1,Z,Y,X`.  Place your new dataset object (example: `mydataset.py`) in `fnet/data/`.
 
 If you have single channel tiff stacks for both input and target images, you can simply use our existing tiffdataset class with a CSV that has columns labeled `path_target` and `path_signal` and whose elements are paths to where those images.
@@ -128,7 +156,7 @@ You can then run predictions on your dataset by running
 ```
 which will output predictions into `results/3d/mydata/test` and `results/3d/mydata/train` (or into whatever output directory was specified in the `predict_mymodel.sh` script).
 
-## Citation
+### Citation
 If you find this code useful in your research, please consider citing our pre-publication manuscript:
 ```
 @article{Ounkomol2018,
@@ -146,11 +174,8 @@ If you find this code useful in your research, please consider citing our pre-pu
 }
 ```
 
-## Contact
-Gregory Johnson  
-E-mail: <gregj@alleninstitute.org>
 
-## Allen Institute Software License
+### Allen Institute Software License
 This software license is the 2-clause BSD license plus clause a third clause that prohibits redistribution and use for commercial purposes without further permission.   
 Copyright © 2018. Allen Institute.  All rights reserved.
 
