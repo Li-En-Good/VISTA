@@ -32,7 +32,7 @@ The method is based on the `release_1` of https://github.com/AllenCellModeling/p
 ### System Requirements
 Installing on Linux is recommended (we have used Ubuntu 16.04).
 
-An nVIDIA graphics card with >10GB of ram (we have used an nVIDIA Titan X Pascal) with current drivers installed (we have used nVIDIA driver version 390.48).
+An nVIDIA graphics card with >10GB of ram (the authors have used an nVIDIA Titan X Pascal) with current drivers installed (we have used nVIDIA driver version 390.48).
 
 ### Installation
 #### Environment setup
