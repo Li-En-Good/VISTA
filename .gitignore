@@ -1,0 +1,9 @@
+Makefile
+__pycache__/
+*.pyc
+results/
+data/*/
+!data/csvs/
+data/csvs/*/
+saved_models/
+tmp/
