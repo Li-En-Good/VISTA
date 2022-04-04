@@ -38,6 +38,7 @@ An nVIDIA graphics card with >10GB of ram (the authors have used an nVIDIA Titan
 #### Environment setup
 - Install [Miniconda](https://conda.io/miniconda.html) if necessary.
 - Create a Conda environment for the platform:
+
 ```shell
 conda env create -f environment.yml
 ```
@@ -53,18 +54,20 @@ The installation was successful if the script executes without errors.
 
 ### Train a model with your data
 
-Pair the directories of corresponding SRS images with ground truth images in a csv file. 
+- Pair the directories of corresponding SRS images with ground truth images in a csv file. 
 
-Place the directories of SRS images under path_signal and ground truth images under path_target columns.
+- Place the directories of SRS images under path_signal and ground truth images under path_target columns.
 
-Place the csv file in the folder data/csvs.
+- Place the csv file in the folder data/csvs.
 
-Modify the configuration in scripts/train_model_2d.sh for optimized parameters, shuch as patch size.
+- Modify the configuration in scripts/train_model_2d.sh for optimized parameters, shuch as patch size.
 
-Activate the environment:
+- Activate the environment:
 ```shell
 conda activate fnet
+```
 
+- Initiate model training
 ```shell
 Command line: ./scripts/train_model_2d.sh <file name of the csv file> 0
 
